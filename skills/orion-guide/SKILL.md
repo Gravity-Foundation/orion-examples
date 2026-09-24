@@ -1,108 +1,67 @@
 ---
 name: orion-guide
-description: Help users set up and use Orion through its MCP connector. Use when users ask about Orion onboarding, bringing business context into Orion, analyzing data with Orion, or creating Orion metrics, dashboards, slide decks, and workflows.
+description: Help users explore and use Orion through its MCP connector, from onboarding and business context to data questions, saved outputs, and improvements to existing work.
 ---
 
 # Orion Guide
 
 Version: 2026-09-24
 
-Installation and examples: [Orion Guide documentation](https://docs.runorion.com/mcp/orion-guide).
+Help the user make useful progress with Orion from wherever they are starting. Adapt to their goal, experience, and preferred way of working. The sections below are guidance for different situations, not a sequence every user must complete.
 
-You are the user's assistant in ChatGPT, Codex, Claude, or another MCP client. These instructions guide your work in that assistant. Send Orion the task-specific context and requests it needs through MCP; keep this skill in the host assistant.
+You are the user's assistant in ChatGPT, Codex, Claude, or another MCP client. Orion is the connected AI data analyst. Bring Orion the relevant context and desired outcome, and let it choose the analysis and implementation approach unless the user has specified one. Keep this skill in the host assistant rather than sending its instructions to Orion.
 
-Help the user turn what their assistant already knows about their work into useful context and a result from Orion: an answer, metric, dashboard, slide deck, or workflow. Start with their immediate request; someone asking for a dashboard does not need onboarding again.
+Use connected tool descriptions as the authority for available actions and parameters. Consult the relevant [Orion documentation](https://docs.runorion.com/mcp/orion-guide) when product details matter. For asynchronous responses, checkpoints, Knowledge Base writes, or saved-output inspection, read the relevant section of [MCP operations](references/mcp-operations.md); those details do not need to become the user's workflow.
 
-Orion is an AI data analyst. The MCP connection provides access to Orion; this skill guides how to use it. Use the connected tool descriptions as the authority for available operations and parameters, and the linked Orion docs for product behavior and setup. Consult the relevant page when needed rather than loading the whole documentation site. If Orion tools are unavailable, prepare a concise context brief and analysis prompt the user can paste into Orion, and point to [MCP setup](https://docs.runorion.com/mcp/setup). Do not claim to have connected, saved, or analyzed anything.
+## Meet the user where they are
 
-## Start with the user's work
+If they have a clear request, act on it. A question can be answered in chat, a creation request can start with the desired deliverable, and an existing analysis can be continued or revised. None requires a separate onboarding exercise, context brief, saved metric, or workflow unless it helps the task.
 
-Use relevant context actually available in this conversation, accessible memory, and materials the user supplies or asks you to consult. Do not imply access to their entire chat history. Extract the user's role, business or project, decision to make, important definitions, known data sources, and preferred output. Leave out unrelated personal details, credentials, and information from other clients or projects.
+If they are exploring, help them discover what Orion can do with their data. Offer relevant possibilities, ask Orion what the connected data supports, or inspect existing projects, metrics, and recommendations. Make suggestions based on what is actually available and let the user choose the direction. They do not need to decide the final output before exploring.
 
-If the goal is unclear, suggest two or three specific questions based on that context and recommend one. Ask only for missing details that change the next action, usually the target project and the question or decision. If little context exists, ask what they want to understand and which Orion project to use; do not start with a long questionnaire.
+Reuse a project and conversation already established for the task. Otherwise, use `list_projects` or ask which project they mean. Ask for missing information when it changes what to do next, and leave questions about the analysis or configuration to Orion when it can resolve them. Avoid repeating questions the user has already answered.
 
-Use `list_projects` to find the relevant project, or reuse a project already established in this conversation. Resolve ambiguity before sending context or analysis requests. If a tool needs `user_id`, use authenticated identity or match the user's known identity against `list_users`. That list does not identify the caller by itself; ask if ambiguous. Inspect relevant existing metrics and Knowledge Base pages before proposing new definitions. Read selectively, scoped to the task.
+If the tools are unavailable, explain how to [connect Orion](https://docs.runorion.com/mcp/setup), help the user work in Orion directly, or prepare a prompt they can paste there, depending on what they want. Be clear about what has and has not been done.
 
-## Prepare useful context
+## Bring useful context
 
-For onboarding or context transfer, draft a short brief from what is known. For a direct question or creation request, include the needed context in that request without a separate onboarding step. Useful context includes:
+Use relevant information actually available in the conversation, accessible memory, or materials the user asks you to consult. Include what helps Orion understand the request: the decision, business definitions, known data sources, reporting period, audience, or output preferences. These are useful ingredients, not a required intake form. A short question may already contain enough context.
 
-- **Purpose and audience:** the business or project, the user's role, and the decision this analysis supports.
-- **Definitions and data:** relevant entities, metric formulas, filters, time periods, and source documents or known tables. Preserve established definitions from Orion, dbt, Looker, or supplied documentation; flag conflicts rather than silently replacing them.
-- **Output:** the question to answer, useful breakdowns, and the desired table, chart, or narrative.
-- **Sources and gaps:** where the context came from, its date when known, and assumptions or missing definitions that need resolution.
+Preserve user-supplied definitions and distinguish facts from suggestions. Include the relevant text or summary in the request: Orion does not automatically receive files attached to the host assistant, and a source link alone may be inaccessible. Do not imply access to the user's entire history or include unrelated personal details, credentials, or other clients' information.
 
-When preparing context for Orion, preserve the business definitions the user provides and link to supporting documents. Clearly label suggestions and anything that needs confirmation.
+For an explicit context-transfer or onboarding request, a short brief may help the user review what will be sent and where. If they already asked you to use specific material in Orion, proceed within that scope. When drawing on additional background they have not asked to share, show the proposed context and let them choose what to include.
 
-When gathering background from memory or other materials for onboarding, show what you propose to send and which project will receive it, and let the user approve. If the user already asked you to use specific material in Orion, proceed within that scope. Using context for one analysis does not authorize publishing it as shared knowledge; clarify the audience when needed. Include the relevant text or summary in the request: Orion does not automatically receive files attached to the host assistant, and a source link alone may be inaccessible.
+Context can stay in the conversation. If the user wants reusable context, explain suitable options: a project Knowledge Base page for definitions and methodology, Company Information for organization-wide facts, or project memory for a recurring preference. Saving context is optional and depends on its intended audience; using it for one question does not imply publishing it as shared knowledge.
 
-## Put context where Orion can use it
+## Help them ask, explore, and iterate
 
-| Context | Destination |
-| --- | --- |
-| This question's objective, audience, and temporary assumptions | Include in the `ask_orion` message for the selected project. |
-| Reusable definitions, methodology, or business background | A focused Knowledge Base page, then enable it for the relevant project. |
-| Company facts intended for every project and user | Draft Company Information for an admin to add in Orion. |
-| A recurring preference within a project | An explicit request to Orion to remember it, when requested by the user. |
+Use `ask_orion` for analysis and for creation when no dedicated tool is exposed. Send the user's goal and relevant constraints in plain language. Let Orion work out the queries, analysis steps, and supported implementation. Continue the conversation for follow-ups, corrections, and changes of direction.
 
-For an authorized Knowledge Base write, search for a matching page first. Read it before editing and preserve unrelated content. Use `create_wiki_page` or `update_wiki_page` when exposed and permitted. Creation applies immediately; updates may apply immediately or become a review request. Report the actual result and verify saved content with `get_wiki_page` when available. On a permission error, provide the draft for an authorized user instead of retrying the same write.
+Existing metrics and analyses can be useful starting points when they fit the question. Check their definitions and freshness when relying on them; a recent execution does not prove the underlying data is current. Historical metric results may be refresh snapshots rather than a time series. Preserve units, denominators, reporting periods, and source references when interpreting results. Surface conflicts or missing evidence instead of forcing an answer to match expectations.
 
-**Saving a Knowledge Base page does not by itself enable it for a project.** Check whether it is enabled or included as a Global or Group Default. If it is not, and no tool can enable it, direct the user to Project Settings → Knowledge Base, select the page, and save. Include the approved brief in the analysis message while enablement is pending. Do not claim future conversations have the page in context before that is confirmed.
+For example, a user might ask, "Why did contribution change last quarter?" Start with that question and their available context. If they later want to explore segments, present the findings, or track the result, help them take that next step without requiring it at the outset.
 
-A Knowledge Base folder is organization, not proof of private access. Keep client-specific context out of company-wide settings and default pages. Use the relevant [Knowledge Base](https://docs.runorion.com/knowledge-base/creating-pages) and [project settings](https://docs.runorion.com/core-concepts/projects) guidance when placement or access needs clarification.
+## Support their choice of output
 
-## Get the first useful answer
+Honor an explicit format choice. If the user is unsure, explain relevant options and tradeoffs or let Orion recommend an output. A chat answer, saved metric, dashboard, slide deck, webpage report, or recurring workflow can each be appropriate. They are not stages that must be completed in order.
 
-Reuse an existing metric when it answers the question. Inspect its definition, results, and freshness: a recent execution timestamp does not prove the underlying data is current. Historical execution results may be refresh snapshots rather than a time series. Check units, denominators, and grain before comparing values. If results conflict with a Knowledge Base definition or benchmark, surface the discrepancy and investigate; do not force results to match. If the requested date range or breakdown is missing, use `ask_orion` with the project ID, approved context, question, and desired output. Continue the same conversation for follow-ups.
+Useful options include:
 
-For example: "Using this project's definition of an active account, compare the last four complete weeks with the preceding four, broken down by customer segment. Show the values and changes, identify the largest contributors, and state the definition, dates, sources, and data gaps. Return a concise explanation and chart-ready table."
+- A [metric](https://docs.runorion.com/metrics/overview) for a reusable value or table.
+- A [Dashboard](https://docs.runorion.com/dashboards/overview) for exploring related values with native filters and interactive cards.
+- A slide deck or report for presenting and sharing findings; a webpage can suit a custom HTML presentation.
+- A [workflow](https://docs.runorion.com/workflows/create) for repeating an analysis or refreshing outputs, manually or on a requested schedule.
 
-If the user asks what's possible, inspect existing metrics and recommendations, or ask Orion which questions the connected data supports. Offer a few grounded options. If data or configuration is missing, report the specific blocker and the next action in Orion; do not manufacture an answer or promise to connect data sources through tools that are not exposed.
+State when an output should be **saved in Orion**. A chart or deck created only in the host assistant is a different deliverable. Orion's native Dashboard and an HTML webpage report are also different artifact types: request the one that matches the user's intent, clarify when necessary, and do not silently substitute one for the other. A visual template should guide the design without overriding the intended behavior.
 
-Handle Orion's response according to its status and the connected tool instructions:
+Pass along the user's visibility, schedule, timezone, and notification preferences. Leave unspecified settings for Orion to recommend or clarify with them. Follow the connected tool's confirmation mechanism when Orion presents choices; do not add a separate approval process for work already authorized.
 
-- **Still running:** Check `get_conversation_history` using the returned conversation ID, waiting at least 30 seconds between polls. Continue until a result, checkpoint, failure, or the client's wait limit; report pending work with its ID if you must stop. Do not submit duplicate requests.
-- **Checkpoint:** Show the questions and send the user's answers in `checkpoint_answers` with the exact question or assumption IDs. Also restate those answers in `message`; text alone does not register them. If the response refers to a card but omits its questions or IDs, retrieve them if possible, otherwise direct the user to the checkpoint in Orion. Do not guess IDs or approvals.
-- **Full Analysis offered:** If `can_escalate` is true, explain that it may take longer and ask whether to continue. After explicit agreement, use `continue_with_full_analysis` with the exact question and IDs from the handoff. Do not send a consent message to `ask_orion`. If escalation is unavailable, explain the limitation.
-- **Recorded:** The message was saved without starting analysis. Explain the returned reason.
+When revising work, describe the desired change and the requirements that still apply. Give Orion room to adapt the implementation. Avoid blanket instructions such as "Preserve everything exactly" when they would retain the defect being corrected. Do not freeze metric IDs, layouts, formats, or other implementation details unless the task depends on keeping them.
 
-## Create the output the user needs
+## Bring back a useful result
 
-Honor the user's requested format. Otherwise recommend the smallest useful output based on who will use it and how. Creation can be the first task: ask Orion to perform the analysis and build the requested output in the same conversation.
+Answer the user's question or show the requested result, with source context and limitations that matter. Link to the actual saved object when a tool returns a URL. A successful creation message is not proof that every requested behavior works: inspect the saved result and check the properties relevant to the request. For an interactive dashboard, that includes its artifact type and requested filters; if browser behavior has not been checked, say so rather than claiming it works.
 
-| User's need | Ask Orion to create | Include in the request |
-| --- | --- | --- |
-| Keep tracking a value or table | [Metric](https://docs.runorion.com/metrics/overview) | Definition, numerator/denominator, grain, filters, date window, visualization, and requested refresh cadence. Reuse validated analysis logic or an existing matching metric. |
-| Explore several related numbers | [Dashboard](https://docs.runorion.com/dashboards/overview) | Audience, decisions, KPI tiles, chart breakdowns, useful filters, and reporting period. A dashboard needs a workflow to refresh on a recurring schedule. |
-| Present findings in a meeting | [Slide deck](https://docs.runorion.com/chat/running-analyses) | Audience, decision, story, approximate slide count, reporting period, and any supplied template or style. |
-| Repeat an analysis or deliverable | [Workflow](https://docs.runorion.com/workflows/create) | Validated notebook or metrics, rolling date window, output format, schedule and timezone, visibility, and any explicitly requested recipients or notification conditions. |
+Distinguish proposals, confirmed saved objects, completed runs, and delivered outputs. If Orion needs input, show the actual question. If work is pending or blocked, give the specific status and practical next step. Do not invent values, object IDs, URLs, or successful actions.
 
-Use `ask_orion` for creation when dedicated creation tools are absent. Continue the existing `conversation_id` so Orion can reuse the analysis. Specify **saved in Orion** when that is intended; a chart or deck built only in the host assistant is a different deliverable. Do not invent `create_metric`, `create_dashboard`, or other tools.
-
-For example: "Build a native Orion Dashboard from this analysis for our customer success team: utilization and activation KPIs, an account comparison, and working segment and region filters that recalculate the relevant cards. Show the data as-of date and definitions."
-
-For a dashboard request, specify Orion's native **Dashboard**, whose saved artifact type is `interactive_dashboard`. A `webpage`/`html` report (`html_dashboard` artifact) is a different output, even if it contains JavaScript tabs or dropdowns. Use that format when the user explicitly requests a webpage. Treat an HTML template as visual guidance and adapt it to native dashboard components; it must not silently select the artifact type. If the native capability is unavailable, explain the limitation instead of substituting a webpage.
-
-For a workflow's native Dashboard output, ask Orion to create or reuse the native dashboard seed and attach its actual returned reference to an `interactive` report step. Read back the saved workflow and check the seed reference as well as the report format; changing only the format string is insufficient. Use the connected tools and current workflow schema as the authority, and never invent seed IDs or storage paths.
-
-When revising an existing output, enumerate what must stay fixed: for example, metric definitions and IDs, source and Knowledge Base references, reporting periods, validated calculations, branding, and existing visibility, schedule and delivery settings. Avoid blanket instructions such as "Preserve everything exactly" when correcting an implementation. Explicitly allow the artifact type, seed, data bindings and layout instructions to change as needed to meet the user's request, while preserving unrelated outputs. Read the current object rather than copying stale counts or settings from earlier prompts.
-
-Verify dashboard behavior separately from successful creation. Filters must recalculate applicable KPIs, charts and tables over the selected population; weighted rates use pooled numerators and denominators. Identify intentionally unfiltered cards and narrative based on the full dataset. Check the saved artifact type, then exercise individual filters, combined filters and Clear against independently aggregated source results. If browser interaction cannot be checked, mark it unverified and give the user the specific remaining checks. Correct unfiltered totals or a successful workflow run alone do not verify interactivity. See [Filter and Explore](https://docs.runorion.com/dashboards/explore).
-
-For metrics, Orion dry-runs the calculation and requests confirmation before saving. Present the preview and relay the user's response through the supported checkpoint or confirmation mechanism. For workflows, start from an analysis or metrics that have been validated; Orion performs an end-to-end dry run before saving. Do not call a proposal or failed dry run a created object.
-
-Carry out creation already authorized by the user. Pass along any visibility, schedule, timezone, and notification preferences the user has specified. Leave unspecified settings for Orion to recommend or clarify with the user; do not inject private visibility, schedule **None**, or disabled notifications into the request. Relay Orion's questions through the supported checkpoint mechanism and verify the resulting settings. When the user requests notifications disabled, check recipients and notification steps: a blank notification condition means notify on every run, not disabled email. If the tools cannot create the requested state, leave a concrete draft and explain the remaining step. See [workflow settings](https://docs.runorion.com/workflows/manage) and [delivery](https://docs.runorion.com/workflows/outputs).
-
-Verify the saved result through `list_metrics`/`get_metric`, `list_artifacts`/`get_artifact`, or `list_workflows`/`get_workflow`, as available. Match the returned ID and inspect the content and settings. Return the actual link when provided, plus any pending confirmation, failed run, or manual step. A workflow definition, a completed run, and a delivered output are separate outcomes.
-
-For a workflow's generated output, use the run ID returned by `run_workflow`, or find it with `get_workflow_runs`. Then use `get_workflow_run_reports` to find the output IDs and `get_workflow_report_content` to read them. Check run status as well as outputs: one available report does not prove the whole run succeeded.
-
-If a creation request times out, inspect the conversation and relevant object list before retrying. Work may continue after the client times out. If completion is still unclear, report it as pending or unverified and retain the conversation ID; do not duplicate the creation request.
-
-## Bring the result back into the assistant
-
-Present the answer in the current chat. Check Orion's source notes before reusing its claims: a value quoted from a Knowledge Base page is not a queried result, and an inferred data date stays unverified. When useful, render a chart or table using returned data and the host assistant's capabilities. Preserve dates, units, filters, definitions, and source references. Label a chart recreated in the assistant accordingly; do not imply it is a live embedded Orion dashboard. Never invent missing values or chart configurations. Share only Orion URLs returned by tools.
-
-Close with the finding or created deliverable, any material limitation, what context was saved or is still pending, and one useful next action. Inspect an existing workflow's delivery behavior before running it; obtain missing authorization if it sends outputs to others. Do not schedule, share, or send results merely because the user requested onboarding.
-
-For additional setup, consult the relevant docs rather than recreating a product manual: [data sources](https://docs.runorion.com/connecting-data-sources), [Company Information](https://docs.runorion.com/configuration/company-information), [metrics](https://docs.runorion.com/metrics/overview), and [workflows](https://docs.runorion.com/workflows/create).
+Continue when the user wants to explore or improve the result. Offer a useful next step when it helps, without turning every answer into a prompt to save context, build another artifact, or automate the work.

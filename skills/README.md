@@ -20,13 +20,13 @@ Without an Orion connection, the assistant can still prepare a brief and a quest
 
 ### ChatGPT
 
-Download [SKILL.md](orion-guide/SKILL.md?raw=true) and add it to a project for your Orion work. Add the project instruction: **"Read the attached SKILL.md and follow Orion Guide when helping me with Orion."** See the [ChatGPT quickstart](https://learn.chatgpt.com/docs/quickstart).
+Download and extract [the skill ZIP](orion-guide-skill.zip?raw=true), then add `SKILL.md` and `references/mcp-operations.md` to a project for your Orion work. Add the project instruction: **"Read the attached SKILL.md and use Orion Guide when helping me with Orion; consult mcp-operations.md for relevant tool details."** See the [ChatGPT quickstart](https://learn.chatgpt.com/docs/quickstart).
 
 Use an Orion connection if your workspace exposes its tools. Adding the file does not establish the connection.
 
 ### Codex
 
-Save [SKILL.md](orion-guide/SKILL.md) at `~/.agents/skills/orion-guide/SKILL.md` for personal use, or `.agents/skills/orion-guide/SKILL.md` in your repository. Connect Orion's MCP server separately, then invoke the skill with **`$orion-guide`** in your prompt. See [Codex skill locations and invocation](https://learn.chatgpt.com/docs/build-skills).
+Download and extract [the skill ZIP](orion-guide-skill.zip?raw=true). Copy the whole `orion-guide` folder, including `references/`, into `~/.agents/skills/` for personal use or `.agents/skills/` in your repository. Connect Orion's MCP server separately, then invoke the skill with **`$orion-guide`** in your prompt. See [Codex skill locations and invocation](https://learn.chatgpt.com/docs/build-skills).
 
 ## Starter prompt
 
@@ -49,4 +49,4 @@ Knowledge Base pages for the project. Ask only for missing details
 needed to proceed.
 ```
 
-Already know what you want? Ask directly: "Build a customer health dashboard in Orion using our existing metrics. Keep it private," or "Turn this validated analysis into a workflow that runs Mondays at 8 a.m. America/New_York with no email notifications."
+Already know what you want? Ask directly: "Build a customer health dashboard in Orion using our existing metrics," or "Turn this validated analysis into a workflow that runs Mondays at 8 a.m. America/New_York." Include your preferences when you have them; Orion can help you choose the remaining settings.
