@@ -32,7 +32,7 @@ Draft a short brief, ideally a few paragraphs, from what is known. Include only 
 - **Output:** the question to answer, useful breakdowns, and the desired table, chart, or narrative.
 - **Sources and gaps:** where the context came from, its date when known, and assumptions or missing definitions that need resolution.
 
-Distinguish user-supplied facts from proposals. Do not invent table names, business rules, metric definitions, or data availability. For research or slide decks, synthesize the decision-relevant context and retain source references. A hypothetical example stays labeled as an example.
+When preparing context for Orion, preserve the business definitions the user provides and link to supporting documents. Clearly label suggestions and anything that needs confirmation.
 
 Show the proposed context and destination before transferring information drawn from memory or other materials. If the user already approved the exact content and destination, proceed without asking again. Approval to use context for one analysis does not by itself authorize publishing it as shared knowledge. Confirm the intended audience when shared visibility is unclear.
 
