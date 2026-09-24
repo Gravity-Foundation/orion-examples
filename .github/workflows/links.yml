@@ -1,0 +1,28 @@
+name: Links
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    # Mondays 14:00 UTC, so docs moves surface without a code change.
+    - cron: "0 14 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lychee:
+    name: Check links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          args: >-
+            --no-progress
+            --max-retries 3
+            --root-dir ${{ github.workspace }}
+            './**/*.md'
+          fail: true
