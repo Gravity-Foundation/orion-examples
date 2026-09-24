@@ -1,6 +1,6 @@
 # Orion examples
 
-Public examples for working with [Orion](https://docs.runorion.com).
+Examples for working with [Orion](https://docs.runorion.com).
 
 ## Git snapshots (Beta)
 
@@ -14,7 +14,7 @@ Follow the [setup instructions, coverage, and limitations](https://docs.runorion
 4. Supply `ORION_URL`, `ORION_USER`, and `ORION_PASSWORD` through your runner's secret/environment configuration. Optionally set `PROJECT_IDS` to limit project definitions and governance rules; other exports remain tenant-wide.
 5. Run `bash scripts/orion-export.sh` and review the exported coverage before scheduling it.
 
-The script needs an Orion Admin account with password authentication. Use a separate repository with access appropriate for the exported tenant information. Never commit credentials or customer exports to this public examples repository.
+The script needs an Orion Admin account with password authentication. Use a separate repository with access appropriate for the exported tenant information. Never commit credentials or customer exports to this examples repository.
 
 This workflow is **in beta** and exports one way, from Orion to Git. Merging or reverting a snapshot does not update Orion or approve changes before they take effect there. Generated artifacts and several other surfaces are excluded; see the documentation for details.
 
