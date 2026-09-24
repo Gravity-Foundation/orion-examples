@@ -5,7 +5,7 @@ description: Help users set up and use Orion through its MCP connector. Use when
 
 # Orion Guide
 
-Version: 2026-09-23
+Version: 2026-09-24
 
 Installation and examples: [Orion Guide documentation](https://docs.runorion.com/mcp/orion-guide).
 
@@ -79,7 +79,15 @@ Honor the user's requested format. Otherwise recommend the smallest useful outpu
 
 Use `ask_orion` for creation when dedicated creation tools are absent. Continue the existing `conversation_id` so Orion can reuse the analysis. Specify **saved in Orion** when that is intended; a chart or deck built only in the host assistant is a different deliverable. Do not invent `create_metric`, `create_dashboard`, or other tools.
 
-For example: "Build an Orion dashboard from this analysis for our customer success team: utilization and activation KPIs, an account comparison, and filters for segment and region. Show the data as-of date and definitions. Keep it private; no schedule or notifications."
+For example: "Build a native Orion Dashboard from this analysis for our customer success team: utilization and activation KPIs, an account comparison, and working segment and region filters that recalculate the relevant cards. Show the data as-of date and definitions. Keep it private; no schedule or notifications."
+
+For a dashboard request, specify Orion's native **Dashboard**, whose saved artifact type is `interactive_dashboard`. A `webpage`/`html` report (`html_dashboard` artifact) is a different output, even if it contains JavaScript tabs or dropdowns. Use that format when the user explicitly requests a webpage. Treat an HTML template as visual guidance and adapt it to native dashboard components; it must not silently select the artifact type. If the native capability is unavailable, explain the limitation instead of substituting a webpage.
+
+For a workflow's native Dashboard output, ask Orion to create or reuse the native dashboard seed and attach its actual returned reference to an `interactive` report step. Read back the saved workflow and check the seed reference as well as the report format; changing only the format string is insufficient. Use the connected tools and current workflow schema as the authority, and never invent seed IDs or storage paths.
+
+When revising an existing output, enumerate what must stay fixed: for example, metric definitions and IDs, source and Knowledge Base references, reporting periods, validated calculations, branding, and existing visibility, schedule and delivery settings. Avoid blanket instructions such as "Preserve everything exactly" when correcting an implementation. Explicitly allow the artifact type, seed, data bindings and layout instructions to change as needed to meet the user's request, while preserving unrelated outputs. Read the current object rather than copying stale counts or settings from earlier prompts.
+
+Verify dashboard behavior separately from successful creation. Filters must recalculate applicable KPIs, charts and tables over the selected population; weighted rates use pooled numerators and denominators. Identify intentionally unfiltered cards and narrative based on the full dataset. Check the saved artifact type, then exercise individual filters, combined filters and Clear against independently aggregated source results. If browser interaction cannot be checked, mark it unverified and give the user the specific remaining checks. Correct unfiltered totals or a successful workflow run alone do not verify interactivity. See [Filter and Explore](https://docs.runorion.com/dashboards/explore).
 
 For metrics, Orion dry-runs the calculation and requests confirmation before saving. Present the preview and relay the user's response through the supported checkpoint or confirmation mechanism. For workflows, start from an analysis or metrics that have been validated; Orion performs an end-to-end dry run before saving. Do not call a proposal or failed dry run a created object.
 
