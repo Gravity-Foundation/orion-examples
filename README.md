@@ -6,7 +6,7 @@ Examples for working with [Orion](https://docs.runorion.com).
 
 [Orion Coach](skills/README.md) helps ChatGPT, Codex, or Claude use the [Orion MCP connector](https://docs.runorion.com/mcp/overview): bring over relevant business context, answer a first question, and create metrics, dashboards, slides, and workflows. Install it in your AI assistant alongside the connector.
 
-Get the [Markdown skill](skills/orion-coach/SKILL.md), [download the Claude ZIP](skills/orion-coach-skill.zip?raw=true), or follow the [installation instructions and starter prompt](skills/README.md).
+Get the [Markdown skill](skills/orion-coach/SKILL.md), [download the Claude ZIP](skills/orion-coach-skill.zip?raw=true), or read the [Orion Coach docs guide](https://docs.runorion.com/mcp/orion-coach). [Installation instructions and a starter prompt](skills/README.md) are also included here.
 
 ## Git snapshots (Beta)
 

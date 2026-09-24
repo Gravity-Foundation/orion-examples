@@ -4,6 +4,8 @@ A skill for **ChatGPT, Codex, or Claude** that complements the [Orion MCP connec
 
 The skill lives in your assistant. Orion provides the connected data analysis and saved deliverables. Product guidance comes from the Orion documentation linked in the skill; available actions depend on your connected tools and account permissions.
 
+Read the [Orion Coach docs guide](https://docs.runorion.com/mcp/orion-coach) for installation, the onboarding prompt, and examples of what to create.
+
 ## Get started
 
 1. [Connect Orion through MCP](https://docs.runorion.com/mcp/setup) and authenticate with your Orion account. The server URL is `https://g.runorion.com/mcp`.
@@ -55,4 +57,4 @@ Already know what you want? Ask directly: "Build a customer health dashboard in 
 python3 -m zipfile -c skills/orion-coach-skill.zip skills/orion-coach
 ```
 
-The archive should contain the `orion-coach/` folder with `SKILL.md` inside. Keep any copies distributed through the Orion docs in sync with the reviewed skill. Installation does not enable automatic updates; users replace their installed copy to get a new version.
+The archive should contain the `orion-coach/` folder with `SKILL.md` inside. The Orion docs link directly to this repository's skill and ZIP, so update them together. Installation does not enable automatic updates; users replace their installed copy to get a new version.

@@ -7,6 +7,8 @@ description: Guide ChatGPT, Codex, or Claude in using Orion through MCP to trans
 
 Version: 2026-09-23
 
+Installation and examples: [Orion Coach docs guide](https://docs.runorion.com/mcp/orion-coach).
+
 You are the user's assistant in ChatGPT, Codex, Claude, or another MCP client. These instructions guide your work in that assistant. Send Orion the task-specific context and requests it needs through MCP; keep this skill in the host assistant.
 
 Help the user turn what their assistant already knows about their work into useful context and a result from Orion: an answer, metric, dashboard, slide deck, or workflow. Start with their immediate request; someone asking for a dashboard does not need onboarding again.
