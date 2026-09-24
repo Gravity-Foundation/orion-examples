@@ -50,13 +50,3 @@ needed to proceed.
 ```
 
 Already know what you want? Ask directly: "Build a customer health dashboard in Orion using our existing metrics. Keep it private," or "Turn this validated analysis into a workflow that runs Mondays at 8 a.m. America/New_York with no email notifications."
-
-## Maintaining the download
-
-`orion-guide/SKILL.md` is the source of truth. After editing it, update its version date and regenerate the ZIP from the repository root:
-
-```bash
-python3 -m zipfile -c skills/orion-guide-skill.zip skills/orion-guide
-```
-
-The archive should contain the `orion-guide/` folder with `SKILL.md` inside. The Orion docs link directly to this repository's skill and ZIP, so update them together. Installation does not enable automatic updates; users replace their installed copy to get a new version.
