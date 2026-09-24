@@ -1,6 +1,6 @@
 ---
 name: orion-guide
-description: Help users set up and use Orion through its MCP connector. Use for Orion onboarding, business-context transfer, data analysis, or creating Orion metrics, dashboards, slide decks, and workflows.
+description: Help users set up and use Orion through its MCP connector. Use when users ask about Orion onboarding, bringing business context into Orion, analyzing data with Orion, or creating Orion metrics, dashboards, slide decks, and workflows.
 ---
 
 # Orion Guide
@@ -21,11 +21,11 @@ Use relevant context actually available in this conversation, accessible memory,
 
 If the goal is unclear, suggest two or three specific questions based on that context and recommend one. Ask only for missing details that change the next action, usually the target project and the question or decision. If little context exists, ask what they want to understand and which Orion project to use; do not start with a long questionnaire.
 
-Use `list_projects` to find the relevant project. Resolve ambiguity before sending context or analysis requests. If a tool needs `user_id`, resolve the current user's identity from authenticated context or `list_users`; ask if ambiguous, never choose another user by default. Inspect relevant existing metrics and Knowledge Base pages before proposing new definitions. Read selectively, scoped to the task.
+Use `list_projects` to find the relevant project, or reuse a project already established in this conversation. Resolve ambiguity before sending context or analysis requests. If a tool needs `user_id`, use authenticated identity or match the user's known identity against `list_users`. That list does not identify the caller by itself; ask if ambiguous. Inspect relevant existing metrics and Knowledge Base pages before proposing new definitions. Read selectively, scoped to the task.
 
 ## Prepare useful context
 
-Draft a short brief, ideally a few paragraphs, from what is known. Include only fields that help this task:
+For onboarding or context transfer, draft a short brief from what is known. For a direct question or creation request, include the needed context in that request without a separate onboarding step. Useful context includes:
 
 - **Purpose and audience:** the business or project, the user's role, and the decision this analysis supports.
 - **Definitions and data:** relevant entities, metric formulas, filters, time periods, and source documents or known tables. Preserve established definitions from Orion, dbt, Looker, or supplied documentation; flag conflicts rather than silently replacing them.
@@ -34,7 +34,7 @@ Draft a short brief, ideally a few paragraphs, from what is known. Include only 
 
 When preparing context for Orion, preserve the business definitions the user provides and link to supporting documents. Clearly label suggestions and anything that needs confirmation.
 
-Show the proposed context and destination before transferring information drawn from memory or other materials. If the user already approved the exact content and destination, proceed without asking again. Approval to use context for one analysis does not by itself authorize publishing it as shared knowledge. Confirm the intended audience when shared visibility is unclear.
+When gathering background from memory or other materials for onboarding, show what you propose to send and which project will receive it, and let the user approve. If the user already asked you to use specific material in Orion, proceed within that scope. Using context for one analysis does not authorize publishing it as shared knowledge; clarify the audience when needed. Include the relevant text or summary in the request: Orion does not automatically receive files attached to the host assistant, and a source link alone may be inaccessible.
 
 ## Put context where Orion can use it
 
@@ -47,7 +47,7 @@ Show the proposed context and destination before transferring information drawn 
 
 For an authorized Knowledge Base write, search for a matching page first. Read it before editing and preserve unrelated content. Use `create_wiki_page` or `update_wiki_page` when exposed and permitted. Creation applies immediately; updates may apply immediately or become a review request. Report the actual result and verify saved content with `get_wiki_page` when available. On a permission error, provide the draft for an authorized user instead of retrying the same write.
 
-**Saving a Knowledge Base page does not enable it for a project.** If no tool can enable the page, direct the user to Project Settings → Knowledge Base, select the page, and save. Until enabled, include the approved brief in the analysis message so the first answer can still use it. Do not claim future conversations have the page in context before enablement is confirmed.
+**Saving a Knowledge Base page does not by itself enable it for a project.** Check whether it is enabled or included as a Global or Group Default. If it is not, and no tool can enable it, direct the user to Project Settings → Knowledge Base, select the page, and save. Include the approved brief in the analysis message while enablement is pending. Do not claim future conversations have the page in context before that is confirmed.
 
 A Knowledge Base folder is organization, not proof of private access. Keep client-specific context out of company-wide settings and default pages. Use the relevant [Knowledge Base](https://docs.runorion.com/knowledge-base/creating-pages) and [project settings](https://docs.runorion.com/core-concepts/projects) guidance when placement or access needs clarification.
 
@@ -59,7 +59,12 @@ For example: "Using this project's definition of an active account, compare the 
 
 If the user asks what's possible, inspect existing metrics and recommendations, or ask Orion which questions the connected data supports. Offer a few grounded options. If data or configuration is missing, report the specific blocker and the next action in Orion; do not manufacture an answer or promise to connect data sources through tools that are not exposed.
 
-Follow tool responses for completion, checkpoints, and analysis-mode changes. If processing is asynchronous, use the returned conversation or run ID to check progress at the documented interval; do not submit duplicate requests. Relay checkpoint questions and record the user's actual answers using the tool's required fields. A recorded message is not a completed analysis. Escalate to Full Analysis only through the supported tool after the user's explicit agreement when offered; explain if escalation is unavailable.
+Handle Orion's response according to its status and the connected tool instructions:
+
+- **Still running:** Check `get_conversation_history` using the returned conversation ID, waiting at least 30 seconds between polls. Continue until a result, checkpoint, failure, or the client's wait limit; report pending work with its ID if you must stop. Do not submit duplicate requests.
+- **Checkpoint:** Show the questions and send the user's answers in `checkpoint_answers` with the exact question or assumption IDs. Also restate those answers in `message`; text alone does not register them. If the response refers to a card but omits its questions or IDs, retrieve them if possible, otherwise direct the user to the checkpoint in Orion. Do not guess IDs or approvals.
+- **Full Analysis offered:** If `can_escalate` is true, explain that it may take longer and ask whether to continue. After explicit agreement, use `continue_with_full_analysis` with the exact question and IDs from the handoff. Do not send a consent message to `ask_orion`. If escalation is unavailable, explain the limitation.
+- **Recorded:** The message was saved without starting analysis. Explain the returned reason.
 
 ## Create the output the user needs
 
@@ -78,9 +83,11 @@ For example: "Build an Orion dashboard from this analysis for our customer succe
 
 For metrics, Orion dry-runs the calculation and requests confirmation before saving. Present the preview and relay the user's response through the supported checkpoint or confirmation mechanism. For workflows, start from an analysis or metrics that have been validated; Orion performs an end-to-end dry run before saving. Do not call a proposal or failed dry run a created object.
 
-Carry out creation already authorized by the user. Ask only for missing choices that matter, such as an ambiguous metric definition, timezone for a requested schedule, or delivery audience. Creation alone does not authorize sharing, scheduled execution, or notifications. If a workflow is being prepared for review, request it with scheduling and notifications disabled; verify that state rather than assuming the request was honored. If the tools cannot create that state, leave a concrete draft and explain the remaining step.
+Carry out creation already authorized by the user. Ask only for missing choices that matter, such as an ambiguous metric definition, timezone for a requested schedule, or delivery audience. Honor requested schedules and delivery; do not add them to a one-off deliverable. For a workflow prepared for review, request schedule **None** and no notification recipients or steps, and verify those settings. A blank notification condition means notify on every run; it does not disable email. If the tools cannot create the requested state, leave a concrete draft and explain the remaining step. See [workflow settings](https://docs.runorion.com/workflows/manage) and [delivery](https://docs.runorion.com/workflows/outputs).
 
 Verify the saved result through `list_metrics`/`get_metric`, `list_artifacts`/`get_artifact`, or `list_workflows`/`get_workflow`, as available. Match the returned ID and inspect the content and settings. Return the actual link when provided, plus any pending confirmation, failed run, or manual step. A workflow definition, a completed run, and a delivered output are separate outcomes.
+
+For a workflow's generated output, use the run ID returned by `run_workflow`, or find it with `get_workflow_runs`. Then use `get_workflow_run_reports` to find the output IDs and `get_workflow_report_content` to read them. Check run status as well as outputs: one available report does not prove the whole run succeeded.
 
 If a creation request times out, inspect the conversation and relevant object list before retrying. Work may continue after the client times out. If completion is still unclear, report it as pending or unverified and retain the conversation ID; do not duplicate the creation request.
 
