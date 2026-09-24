@@ -1,0 +1,21 @@
+# Orion examples
+
+Public examples for working with [Orion](https://docs.runorion.com).
+
+## Git snapshots (Beta)
+
+The [snapshot export script](git-snapshots/orion-export.sh) exports supported Orion definitions and selected tenant configuration into a Git checkout. The [GitHub Actions example](git-snapshots/orion-export.yml) schedules exports and opens a pull request.
+
+Follow the [setup instructions, coverage, and limitations](https://docs.runorion.com/version-control/sync-to-git) before running either example.
+
+1. Copy `git-snapshots/orion-export.sh` into your destination repository as `scripts/orion-export.sh`.
+2. If using GitHub Actions, copy `git-snapshots/orion-export.yml` to `.github/workflows/orion-export.yml` and configure the tenant URL and repository secrets as described in the docs.
+3. Commit the files before running. Use Bash, curl, jq, and git in a clean checkout. Reserve `orion-snapshots/` for generated output.
+4. Supply `ORION_URL`, `ORION_USER`, and `ORION_PASSWORD` through your runner's secret/environment configuration. Optionally set `PROJECT_IDS` to limit project definitions and governance rules; other exports remain tenant-wide.
+5. Run `bash scripts/orion-export.sh` and review the exported coverage before scheduling it.
+
+The script needs an Orion Admin account with password authentication. Use a separate repository with access appropriate for the exported tenant information. Never commit credentials or customer exports to this public examples repository.
+
+This workflow is **in beta** and exports one way, from Orion to Git. Merging or reverting a snapshot does not update Orion or approve changes before they take effect there. Generated artifacts and several other surfaces are excluded; see the documentation for details.
+
+The workflow YAML is an example file, not an active workflow in this repository.

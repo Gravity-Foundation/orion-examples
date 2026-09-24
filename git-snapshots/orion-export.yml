@@ -1,0 +1,47 @@
+name: Orion export
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: orion-export
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    env:
+      ORION_URL: https://your-tenant.runorion.com
+      ORION_USER: ${{ secrets.ORION_USER }}
+      ORION_PASSWORD: ${{ secrets.ORION_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Export and commit
+        run: |
+          git config user.name "orion-export"
+          git config user.email "orion-export@users.noreply.github.com"
+          git checkout -B orion-export
+          bash scripts/orion-export.sh
+      - name: Open a pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet origin/main; then
+            echo "Nothing to review"
+            exit 0
+          fi
+          git push --force origin orion-export
+          pr_count=$(gh pr list --base main --head orion-export --state open \
+            --json number --jq 'length')
+          if [ "$pr_count" -eq 0 ]; then
+            gh pr create --base main --head orion-export \
+              --title "Orion snapshot $(date -u +%Y-%m-%d)" \
+              --body "Review this exported snapshot. Merging does not update Orion."
+          fi
