@@ -1,10 +1,10 @@
-# Orion Coach
+# Orion Guide
 
 A skill for **ChatGPT, Codex, or Claude** that complements the [Orion MCP connector](https://docs.runorion.com/mcp/overview). Your assistant uses relevant context about your work to ask Orion better questions, prepare Knowledge Base pages, and request metrics, dashboards, slide decks, and workflows. It checks the results and brings them back into your conversation.
 
 The skill lives in your assistant. Orion provides the connected data analysis and saved deliverables. Product guidance comes from the Orion documentation linked in the skill; available actions depend on your connected tools and account permissions.
 
-Read the [Orion Coach docs guide](https://docs.runorion.com/mcp/orion-coach) for installation, the onboarding prompt, and examples of what to create.
+Read the [Orion Guide documentation](https://docs.runorion.com/mcp/orion-guide) for installation, the onboarding prompt, and examples of what to create.
 
 ## Get started
 
@@ -16,22 +16,24 @@ Without an Orion connection, the assistant can still prepare a brief and a quest
 
 ### Claude
 
-[Download the ZIP](orion-coach-skill.zip?raw=true) without unzipping it. In **Customize → Skills**, choose **+ → Create skill → Upload a skill**, upload the ZIP, and enable it. Skills require code execution and may need to be enabled by your organization. See [Claude's installation guide](https://support.claude.com/en/articles/12512180-use-skills-in-claude).
+[Download the ZIP](orion-guide-skill.zip?raw=true) without unzipping it. In **Customize → Skills**, choose **+ → Create skill → Upload a skill**, upload the ZIP, and enable it. Skills require code execution and may need to be enabled by your organization. See [Claude's installation guide](https://support.claude.com/en/articles/12512180-use-skills-in-claude).
 
 ### ChatGPT
 
-Download [SKILL.md](orion-coach/SKILL.md?raw=true) and add it to a project for your Orion work. Add the project instruction: **"Read the attached SKILL.md and follow Orion Coach when helping me with Orion."** See the [ChatGPT quickstart](https://learn.chatgpt.com/docs/quickstart).
+Download [SKILL.md](orion-guide/SKILL.md?raw=true) and add it to a project for your Orion work. Add the project instruction: **"Read the attached SKILL.md and follow Orion Guide when helping me with Orion."** See the [ChatGPT quickstart](https://learn.chatgpt.com/docs/quickstart).
 
 Use an Orion connection if your workspace exposes its tools. Adding the file does not establish the connection.
 
 ### Codex
 
-Save [SKILL.md](orion-coach/SKILL.md) at `~/.agents/skills/orion-coach/SKILL.md` for personal use, or `.agents/skills/orion-coach/SKILL.md` in your repository. Connect Orion's MCP server separately, then ask Codex to **use Orion Coach**. See [Codex skill locations](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills).
+Save [SKILL.md](orion-guide/SKILL.md) at `~/.agents/skills/orion-guide/SKILL.md` for personal use, or `.agents/skills/orion-guide/SKILL.md` in your repository. Connect Orion's MCP server separately, then invoke the skill with **`$orion-guide`** in your prompt. See [Codex skill locations and invocation](https://learn.chatgpt.com/docs/build-skills).
 
 ## Starter prompt
 
+Explicitly request Orion Guide for your first session using the prompt below. Installed skills can also be selected automatically for matching requests, but selection is not guaranteed. In ChatGPT's project-file setup, keep the project instruction above so the assistant knows to read the file.
+
 ```text
-Use Orion Coach to help me get my first useful result from Orion.
+Use Orion Guide to help me get my first useful result from Orion.
 
 Use relevant context you can actually access about my work and goals to
 draft a short brief. Show me what you would share and where before
@@ -51,10 +53,10 @@ Already know what you want? Ask directly: "Build a customer health dashboard in 
 
 ## Maintaining the download
 
-`orion-coach/SKILL.md` is the source of truth. After editing it, update its version date and regenerate the ZIP from the repository root:
+`orion-guide/SKILL.md` is the source of truth. After editing it, update its version date and regenerate the ZIP from the repository root:
 
 ```bash
-python3 -m zipfile -c skills/orion-coach-skill.zip skills/orion-coach
+python3 -m zipfile -c skills/orion-guide-skill.zip skills/orion-guide
 ```
 
-The archive should contain the `orion-coach/` folder with `SKILL.md` inside. The Orion docs link directly to this repository's skill and ZIP, so update them together. Installation does not enable automatic updates; users replace their installed copy to get a new version.
+The archive should contain the `orion-guide/` folder with `SKILL.md` inside. The Orion docs link directly to this repository's skill and ZIP, so update them together. Installation does not enable automatic updates; users replace their installed copy to get a new version.
