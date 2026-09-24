@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Render the README banner: the Orion mark at the heart of a spiral nebula.
 
-Writes assets/banner.txt (plain ASCII) and assets/banner.svg (brand colors,
-twinkling stars). Needs Pillow and the mark at assets/orion-star.png.
+Writes assets/banner.svg (brand colors, twinkling stars). Needs Pillow and the mark at assets/orion-star.png.
 
     python3 scripts/banner.py
 """
@@ -134,11 +133,6 @@ def build():
     return grid
 
 
-def write_txt(grid):
-    lines = ["".join(c for c, _, _ in row).rstrip() for row in grid]
-    (ROOT / "assets/banner.txt").write_text("\n".join(lines) + "\n")
-
-
 def esc(text):
     return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
@@ -222,6 +216,4 @@ def write_svg(grid):
 
 
 if __name__ == "__main__":
-    g = build()
-    write_txt(g)
-    write_svg(g)
+    write_svg(build())
