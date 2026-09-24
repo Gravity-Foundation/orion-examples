@@ -22,12 +22,13 @@ The workflow YAML is an example file, not an active workflow in this repository.
 
 ## Maintaining the docs embed
 
-This repository is the source of truth. The docs embed a [public Gist mirror](https://gist.github.com/noahgcook/6a55a32a090a133c10b4aad1ff98a0d1) owned by `noahgcook`, pinned to a reviewed revision. Updating this repository alone does not change the embedded script.
+This repository is the source of truth. The docs embed public Gist mirrors for the [shell script](https://gist.github.com/noahgcook/6a55a32a090a133c10b4aad1ff98a0d1) and [workflow](https://gist.github.com/noahgcook/370eb8fd810f48de98f8843bcc01de00), owned by `noahgcook` and pinned to reviewed revisions. Updating this repository alone does not change either embed.
 
-After reviewing a script change, a maintainer with access to the Gist can update it with:
+After reviewing a change, a maintainer with access can update the corresponding Gist:
 
 ```bash
 gh gist edit 6a55a32a090a133c10b4aad1ff98a0d1 --filename orion-export.sh git-snapshots/orion-export.sh
+gh gist edit 370eb8fd810f48de98f8843bcc01de00 --filename orion-export.yml git-snapshots/orion-export.yml
 ```
 
 Then update the Gist revision and matching repository commit links in `orion-docs/version-control/sync-to-git.mdx` together and verify the rendered preview. Keep credentials and tenant snapshots out of both the Gist and this repository.
