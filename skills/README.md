@@ -49,4 +49,4 @@ Knowledge Base pages for the project. Ask only for missing details
 needed to proceed.
 ```
 
-Already know what you want? Ask directly: "Build a customer health dashboard in Orion using our existing metrics. Keep it private," or "Turn this validated analysis into a workflow that runs Mondays at 8 a.m. America/New_York with no email notifications."
+Already know what you want? Ask directly: "Build a customer health dashboard in Orion using our existing metrics. Keep it private," or "Turn this validated analysis into a workflow that runs Mondays at 8 a.m. America/New_York."
