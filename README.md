@@ -24,6 +24,7 @@
 | Example | What it does | Get started |
 | --- | --- | --- |
 | **Orion Guide** | Helps Claude, Codex, or ChatGPT use Orion through MCP to answer questions and create metrics, dashboards, slides, and workflows. | [Install the skill](skills/README.md) |
+| **Workflow Fleet** `beta` | Runs many copies of one proven workflow from a State table that lists which copies should exist and how each differs. Your assistant plans and applies the changes through MCP. | [Install the skill](skills/README.md#workflow-fleet) |
 | **Git snapshots** `beta` | Exports Orion definitions and selected tenant configuration to Git for version history and pull-request review. | [Set up exports](git-snapshots/README.md) |
 
 Each example includes its own setup instructions and requirements. Start with the linked guide, then copy or install the files you need.
@@ -34,7 +35,9 @@ Each example includes its own setup instructions and requirements. Start with th
 orion-examples/
 ├── skills/
 │   ├── orion-guide/SKILL.md     assistant skill, source of truth
-│   └── orion-guide-skill.zip    upload-ready bundle for Claude
+│   ├── orion-guide-skill.zip    upload-ready bundle for Claude
+│   ├── orion-workflow-fleet/SKILL.md   State table to a fleet of workflows
+│   └── orion-workflow-fleet-skill.zip  upload-ready bundle for Claude
 ├── git-snapshots/
 │   ├── orion-export.sh          export Orion config to Git
 │   └── orion-export.yml         scheduled GitHub Actions runner
