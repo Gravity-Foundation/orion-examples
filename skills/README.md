@@ -50,3 +50,22 @@ needed to proceed.
 ```
 
 Already know what you want? Ask directly: "Build a customer health dashboard in Orion using our existing metrics," or "Turn this validated analysis into a workflow that runs Mondays at 8 a.m. America/New_York." Include your preferences when you have them; Orion can help you choose the remaining settings.
+
+## Workflow Fleet
+
+`beta`. A skill for teams that need the same workflow many times over: one weekly report per account, region, store, or account manager.
+
+A State table (structured context) in Orion lists every workflow that should exist, the values that make each one different, and small variations in plain language ("send on Tuesdays instead", "leave out the returns section"). One proven workflow is the template. Your assistant reads the table, compares it with the workflows that exist, shows you a plan, and creates or updates workflows after you approve. People edit the table; the assistant keeps the workflows in line with it.
+
+It also audits copies for drift from the template and rolls new template versions out to a few copies before the rest.
+
+Install it the same way as Orion Guide: [download the ZIP](orion-workflow-fleet-skill.zip?raw=true) for Claude, or use [SKILL.md](orion-workflow-fleet/SKILL.md) directly in ChatGPT or Codex. Your Orion connection needs the workflow create and update tools and write access to the project.
+
+Starter prompt:
+
+```text
+Use Orion Workflow Fleet. I have a workflow that works for one account
+and I need a copy for each account in the attached list. Help me set up
+the fleet table, prove the template, and show me the plan before
+creating anything.
+```
